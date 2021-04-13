@@ -15,22 +15,26 @@ all_cards = ["ダイヤ の A", "ダイヤ の 2", "ダイヤ の 3", "ダイヤ
              ]
 check_numbers1 = [" 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"]
 check_numbers2 = ["10", " J", " Q", " K"]
-check_numbers3 = ["A"]
+check_numbers3 = [" A"]
 player_total = 0
 dealer_total = 0
 dealer_second_card = ""
+
+def calculate_score(card, total):
+    if card[-2:] in check_numbers1:
+        total += int(card[-2:])
+    if card[-2:] in check_numbers2:
+        total += 10
+    if card[-2:] in check_numbers3:
+        total += 1
+    return total
 
 for i in range(2):
     player_card = random.choice(all_cards)
     print(f"プレイヤーが引いたカードは{player_card}です")
     all_cards.remove(player_card)
 
-    if player_card[-2:] in check_numbers1:
-        player_total += int(player_card[-2:])
-    if player_card[-2:] in check_numbers2:
-        player_total += 10
-    if player_card[-2:] in check_numbers3:
-        player_total += 1
+    player_total = calculate_score(player_card, player_total)
 
 for i in range(2):
     dealer_card = random.choice(all_cards)
@@ -41,37 +45,29 @@ for i in range(2):
         print(f"ディーラーが引いたカードは{dealer_card}です")
     all_cards.remove(dealer_card)
 
-    if dealer_card[-2:] in check_numbers1:
-        dealer_total += int(dealer_card[-2:])
-    if dealer_card[-2:] in check_numbers2:
-        dealer_total += 10
-    if dealer_card[-2:] in check_numbers3:
-        dealer_total += 1
+    dealer_total = calculate_score(dealer_card, dealer_total)
 
 print(f"あなたの現在の得点は{player_total}です")
 
 while True:
-    answer = input("カードを引きますか？引く場合はY、やめる場合はNを入力してください")
+    answer = input("カードを引きますか？引く場合はY、やめる場合はNを入力してください\n")
 
     if answer == "Y":
         player_card = random.choice(all_cards)
         print(f"プレイヤーが引いたカードは{player_card}です")
         all_cards.remove(player_card)
 
-        if player_card[-2:] in check_numbers1:
-            player_total += int(player_card[-2:])
-        if player_card[-2:] in check_numbers2:
-            player_total += 10
-        if player_card[-2:] in check_numbers3:
-            player_total += 1
+        player_total = calculate_score(player_card, player_total)
 
         print(f"あなたの現在の得点は{player_total}です")
 
         if player_total >= 22:
             print(f"あなたの得点は{player_total}です")
+            print(f"ディーラーの2枚目のカードは{dealer_second_card}でした")
             print(f"ディーラーの得点は{dealer_total}です")
             print("あなたの負けです！")
             print("ブラックジャックまた遊んでね！")
+            exit()
     else:
         break
 
@@ -85,12 +81,7 @@ while True:
         print(f"ディーラーが引いたカードは{dealer_card}です")
         all_cards.remove(dealer_card)
 
-        if dealer_card[-2:] in check_numbers1:
-            dealer_total += int(dealer_card[-2:])
-        if dealer_card[-2:] in check_numbers2:
-            dealer_total += 10
-        if dealer_card[-2:] in check_numbers3:
-            dealer_total += 1
+        dealer_total = calculate_score(dealer_card, dealer_total)
         
         if dealer_total >= 22:
             print(f"あなたの得点は{player_total}です")
@@ -111,16 +102,13 @@ print(f"あなたの得点は{player_total}です")
 print(f"ディーラーの得点は{dealer_total}です")
 
 if player_total > dealer_total:
-    print("あなたの勝ちです！")
-    print("ブラックジャックまた遊んでね！")
-    exit()
+    print("あなたの勝ちです！")    
 elif player_total < dealer_total:
     print("あなたの負けです！")
-    print("ブラックジャックまた遊んでね！")
-    exit()
 else:
     print("引き分けです！")
-    print("ブラックジャックまた遊んでね！")
-    exit()
+
+print("ブラックジャックまた遊んでね！")
+    
 
     
