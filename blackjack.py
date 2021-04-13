@@ -48,6 +48,7 @@ for i in range(2):
     dealer_score = calculate_score(dealer_card, dealer_score)
 
 print(f"あなたの現在の得点は{player_score}です")
+
 while True:
     answer = input("カードを引きますか？引く場合はY、やめる場合はNを入力してください\n")
 
@@ -80,10 +81,10 @@ while True:
         
         if dealer_score >= 22:
             result_announce("勝ち")
-    else:
-        if dealer_score >= 22:
-            result_announce("勝ち")
+    elif 17 <= dealer_score <= 21:
         break
+    elif dealer_score >= 22:
+        result_announce("勝ち")
 
 if player_score > dealer_score:
     result_announce("勝ち")  
