@@ -1,32 +1,22 @@
 import random
 
-all_cards = ["ダイヤ の A", "ダイヤ の 2", "ダイヤ の 3", "ダイヤ の 4",
-             "ダイヤ の 5", "ダイヤ の 6", "ダイヤ の 7", "ダイヤ の 8",
-             "ダイヤ の 9", "ダイヤ の 10", "ダイヤ の J", "ダイヤ の Q", "ダイヤの K",
-             "ハート の A", "ハート の 2", "ハート の 3", "ハート の 4",
-             "ハート の 5", "ハート の 6", "ハート の 7", "ハート の 8",
-             "ハート の 9", "ハート の 10", "ハート の J", "ハート の Q", "ハート の K",
-             "スペード の A", "スペード の 2", "スペード の 3", "スペード の 4",
-             "スペード の 5", "スペード の 6", "スペード の 7", "スペード の 8",
-             "スペード の 9", "スペード の 10", "スペード の J", "スペード の Q", "スペード の K",
-             "クローバー の A", "クローバー の 2", "クローバー の 3", "クローバー の 4",
-             "クローバー の 5", "クローバー の 6", "クローバー の 7", "クローバー の 8",
-             "クローバー の 9", "クローバー の 10", "クローバー の J", "クローバー の Q", "クローバー の K"
-             ]
-check_numbers1 = [" 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"]
-check_numbers2 = ["10", " J", " Q", " K"]
-check_numbers3 = [" A"]
+suits = [" ダイヤ ", " ハート ", " スペード ", " クローバー "]
+card_numbers1 = [" A"]
+card_numbers2 = [" 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"]
+card_numbers3 = ["10", " J", " Q", " K"]
+all_cards = [s + "の" + n for s in suits for n in (card_numbers1 + card_numbers2 + card_numbers3)]
 player_total = 0
 dealer_total = 0
 dealer_second_card = ""
 
 def calculate_score(card, total):
-    if card[-2:] in check_numbers1:
-        total += int(card[-2:])
-    if card[-2:] in check_numbers2:
-        total += 10
-    if card[-2:] in check_numbers3:
+    if card[-2:] in card_numbers1:
         total += 1
+    if card[-2:] in card_numbers2:
+        total += int(card[-2:])
+    if card[-2:] in card_numbers3:
+        total += 10
+    
     return total
 
 def result_announce(result):
