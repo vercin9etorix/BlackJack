@@ -63,7 +63,7 @@ print(f"あなたの現在の得点は{player_total}です")
 while True:
     answer = input("カードを引きますか？引く場合はY、やめる場合はNを入力してください\n")
 
-    if answer == "Y":
+    if answer.lower() == "y":
         player_card = random.choice(all_cards)
         print(f"プレイヤーが引いたカードは{player_card}です")
         all_cards.remove(player_card)
@@ -73,14 +73,12 @@ while True:
         print(f"あなたの現在の得点は{player_total}です")
 
         if player_total >= 22:
-            print(f"あなたの得点は{player_total}です")
             print(f"ディーラーの2枚目のカードは{dealer_second_card}でした")
-            print(f"ディーラーの得点は{dealer_total}です")
-            print("あなたの負けです！")
-            print("ブラックジャックまた遊んでね！")
-            exit()
-    else:
+            result_announce("負け")
+    elif answer.lower() == "n":
         break
+    else:
+        print("Y または N を入力してください")
 
 print(f"ディーラーの2枚目のカードは{dealer_second_card}でした")
 print(f"ディーラーの現在の得点は{dealer_total}です")
