@@ -29,6 +29,17 @@ def calculate_score(card, total):
         total += 1
     return total
 
+def result_announce(result):
+    print(f"あなたの得点は{player_total}です")
+    print(f"ディーラーの得点は{dealer_total}です")
+    if player_total == dealer_total:
+        print(f"{result}です！")
+    else:
+        print(f"あなたの{result}です！")
+    print("ブラックジャックまた遊んでね！")
+    exit()
+
+
 for i in range(2):
     player_card = random.choice(all_cards)
     print(f"プレイヤーが引いたカードは{player_card}です")
@@ -84,31 +95,18 @@ while True:
         dealer_total = calculate_score(dealer_card, dealer_total)
         
         if dealer_total >= 22:
-            print(f"あなたの得点は{player_total}です")
-            print(f"ディーラーの得点は{dealer_total}です")
-            print("あなたの勝ちです！")
-            print("ブラックジャックまた遊んでね！")
-            exit()
+            result_announce("勝ち")
     else:
         if dealer_total >= 22:
-            print(f"あなたの得点は{player_total}です")
-            print(f"ディーラーの得点は{dealer_total}です")
-            print("あなたの勝ちです！")
-            print("ブラックジャックまた遊んでね！")
-            exit()
+            result_announce("勝ち")
         break
 
-print(f"あなたの得点は{player_total}です")
-print(f"ディーラーの得点は{dealer_total}です")
-
 if player_total > dealer_total:
-    print("あなたの勝ちです！")    
+    result_announce("勝ち")  
 elif player_total < dealer_total:
-    print("あなたの負けです！")
+    result_announce("負け")
 else:
-    print("引き分けです！")
-
-print("ブラックジャックまた遊んでね！")
+    result_announce("引き分け")
     
 
     
