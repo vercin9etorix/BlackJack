@@ -9,17 +9,17 @@ player_score = 0
 dealer_score = 0
 dealer_second_card = ""
 
-def calculate_score(card, total):
+def calculate_score(card, score):
     if card[-2:] in card_numbers1:
-        total += 1
+        score += 1
     if card[-2:] in card_numbers2:
-        total += int(card[-2:])
+        score += int(card[-2:])
     if card[-2:] in card_numbers3:
-        total += 10
+        score += 10
     
-    return total
+    return score
 
-def result_announce(result):
+def announce_result(result):
     print(f"あなたの得点は{player_score}です")
     print(f"ディーラーの得点は{dealer_score}です")
     if player_score == dealer_score:
@@ -29,13 +29,21 @@ def result_announce(result):
     print("ブラックジャックまた遊んでね！")
     exit()
 
+def select_card(player):
+    card = random.choice(all_cards)
+    if player == "player":
+        print(f"プレイヤーが引いたカードは{card}です")
+    else:
+        print(f"ディーラーが引いたカードは{card}です")
+    all_cards.remove(card)
+    return card
+
+print("☆ ★ " * 3 + "ブラックジャックへようこそ！" + "☆ ★ " * 3)
 
 for i in range(2):
-    player_card = random.choice(all_cards)
-    print(f"プレイヤーが引いたカードは{player_card}です")
-    all_cards.remove(player_card)
-
+    player_card = select_card("player")
     player_score = calculate_score(player_card, player_score)
+
 for i in range(2):
     dealer_card = random.choice(all_cards)
     if i == 1:
@@ -50,18 +58,16 @@ for i in range(2):
 print(f"あなたの現在の得点は{player_score}です")
 
 while True:
-    answer = input("カードを引きますか？引く場合はY、やめる場合はNを入力してください\n")
+    answer = input("カードを引きますか？\n引く場合はY、やめる場合はNを入力してください\n")
 
     if answer.lower() == "y":
-        player_card = random.choice(all_cards)
-        print(f"プレイヤーが引いたカードは{player_card}です")
-        all_cards.remove(player_card)
-
+        player_card = select_card("player")
         player_score = calculate_score(player_card, player_score)
         print(f"あなたの現在の得点は{player_score}です")
+
         if player_score >= 22:
             print(f"ディーラーの2枚目のカードは{dealer_second_card}でした")
-            result_announce("負け")
+            announce_result("負け")
     elif answer.lower() == "n":
         break
     else:
@@ -73,22 +79,20 @@ print(f"ディーラーの現在の得点は{dealer_score}です")
 while True:
     
     if  dealer_score < 17:
-        dealer_card = random.choice(all_cards)
-        print(f"ディーラーが引いたカードは{dealer_card}です")
-        all_cards.remove(dealer_card)
-
+        dealer_card = select_card("dealer")
         dealer_score = calculate_score(dealer_card, dealer_score)
         
         if dealer_score >= 22:
-            result_announce("勝ち")
+            announce_result("勝ち")
+            
     elif 17 <= dealer_score <= 21:
         break
     elif dealer_score >= 22:
-        result_announce("勝ち")
+        announce_result("勝ち")
 
 if player_score > dealer_score:
-    result_announce("勝ち")  
+    announce_result("勝ち")  
 elif player_score < dealer_score:
-    result_announce("負け")
+    announce_result("負け")
 else:
-    result_announce("引き分け")
+    announce_result("引き分け")
